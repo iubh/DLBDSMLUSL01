@@ -2,8 +2,7 @@
 # Machine Learning - Unsupervised Machine Learning
 # Course Code: DLBDSMLUSL01
 
-# Feature Engineering
-# Numerical Features
+# Numerical feature imputation
 
 #%% load libraries
 import pandas as pd

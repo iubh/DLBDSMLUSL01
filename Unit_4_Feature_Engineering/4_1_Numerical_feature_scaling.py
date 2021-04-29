@@ -2,7 +2,7 @@
 # Machine Learning - Unsupervised Machine Learning
 # Course Code: DLBDSMLUSL01
 
-# Feature scaling
+# Numerical feature scaling
 
 #%% import libraries
 import pandas as pd

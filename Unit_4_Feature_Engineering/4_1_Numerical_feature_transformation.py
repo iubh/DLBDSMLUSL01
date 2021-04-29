@@ -2,7 +2,7 @@
 # Machine Learning - Unsupervised Machine Learning
 # Course Code: DLBDSMLUSL01
 
-# Feature transformation
+# Numerical feature transformation
 
 #%% import libraries
 from numpy import exp
