@@ -1,6 +1,6 @@
-#%% IU - International University of Applied Science
-#%% Machine Learning - Unsupervised Machine Learning
-#%% Course Code: DLBDSMLUSL01
+# IU - International University of Applied Science
+# Machine Learning - Unsupervised Machine Learning
+# Course Code: DLBDSMLUSL01
 
 '''
 In this example, we will see how we can use Python
@@ -102,4 +102,3 @@ for c, r in zip(centers, radii):
 
 # show the plot                        
 plt.show()
-

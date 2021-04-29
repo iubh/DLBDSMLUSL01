@@ -2,45 +2,65 @@
 # Machine Learning - Unsupervised Machine Learning
 # Course Code: DLBDSMLUSL01
 
-'''
-In this example, we will see how we can use Python
-to extract added value within a data set based on dates.
-'''
+# Feature Engineering
 
-#%% load the required packages
+#%% import libraries
+import numpy as np
 import pandas as pd
-from scipy.stats import spearmanr
-from datetime import date
-import seaborn as sns
+import datetime
 
-#%% load the data
-dat = pd.read_csv('./data/data_visitors.csv', delimiter=' ')
+#%% create sample data
+Student_R = { \
+    'Student_ID':['S1', 'S2', 'S3'], \
+    'Birth_date': [datetime.date(1996,7,14), \
+                   datetime.date(1997,8,22), \
+                   datetime.date(1998,5,11)]}
 
-#%% glimpse at the data
-dat
+Student_R = pd.DataFrame(Student_R, \
+    columns = ['Student_ID','Birth_date'])
 
-#%% correlate the date and the visitors
-spearmanr(dat['date'], dat['visitors'])
+Courses = { \
+    'Student_ID':['S1', 'S2', 'S3', 'S1', 'S2', 'S3'], \
+    'Grades':[18, 11, 12, 15, 19, 10]}
 
-#%% define the date as such
-dat['date'] = pd.to_datetime(dat['date'])
+Courses = pd.DataFrame (Courses, \
+    columns = ['Student_ID', 'Grades'])
 
-#%% extract the weekdays from the date
-dat['weekday'] = dat['date'].apply(lambda date: date.weekday())
+#%% extracting the year from the birth date
+Student_R['year'] = pd.DatetimeIndex(Student_R['Birth_date']).year
+print(Student_R.head())
 
-#%% glimpse at the data
-dat
+# console output:
+#   Student_ID  Birth_date  year
+# 0         S1  1996-07-14  1996
+# 1         S2  1997-08-22  1997
+# 2         S3  1998-05-11  1998
 
-#%% extract the weekends
-dat['weekend'] = dat['weekday'].\
-    apply(lambda weekday: 0 if (weekday < 5) else 1)
+#%% creation of features by aggregation of grouped values
+goper = Courses.groupby('Student_ID')['Grades'].\
+    agg(['mean','max','min'])
 
-#%% glimpse at the data
-dat
+# rename columns
+goper.columns = ['mean_grade','max_grade','min_grade']
+print(goper.head())
 
-#%% correlate the weekends and the visitors
-spearmanr(dat['weekend'], dat['visitors'])
+# console output:
+#             mean_grade  max_grade  min_grade
+# Student_ID                                  
+# S1                16.5         18         15
+# S2                15.0         19         11
+# S3                11.0         12         10
 
-#%% visually glimpse at the data
-ax = sns.barplot(x="weekend", y="visitors", data=dat)
-# %%
+
+#%% merge with the Student_R dataframe
+R = Student_R.merge(goper, left_on = 'Student_ID', \
+    right_index=True, how = 'left'). \
+        head()
+
+# show the dataframe
+R
+
+#   Student_ID  Birth_date  year  mean_grade  max_grade  min_grade
+# 0         S1  1996-07-14  1996        16.5         18         15
+# 1         S2  1997-08-22  1997        15.0         19         11
+# 2         S3  1998-05-11  1998        11.0         12         10
