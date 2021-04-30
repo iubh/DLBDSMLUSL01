@@ -2,7 +2,7 @@
 # Machine Learning - Unsupervised Machine Learning
 # Course Code: DLBDSMLUSL01
 
-# Generating numerical interaction features
+# Numerical interaction features
 
 #%% import libraries
 import pandas as pd
