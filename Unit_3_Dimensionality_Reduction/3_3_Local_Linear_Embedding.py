@@ -13,6 +13,12 @@ from sklearn import manifold, datasets
 n_pts = 1000
 X, color = datasets.make_s_curve(n_pts, random_state=0)
 
+#%% display the data points
+fig = plt.figure()
+ax = fig.add_subplot(projection='3d')
+ax.scatter(xs=X[:,0], ys=X[:,1], zs=X[:,2], c=color)
+plt.show()    
+
 #%%
 # apply LLE to the generated Swiss roll dataset
 # to project it into a 2-dimensional feature space
@@ -25,3 +31,5 @@ X_2d = embedding.fit_transform(X)
 # reduced feature space
 plt.scatter(X_2d[:,0], X_2d[:,1], c=color)
 plt.show()    
+
+# %%

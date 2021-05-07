@@ -8,6 +8,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.cluster.hierarchy import dendrogram, ward
+from sklearn.cluster import AgglomerativeClustering
 
 #%% generate sample data
 X1 = np.random.rand(5,2)
@@ -38,10 +39,6 @@ plt.ylabel("Cluster distance")
 
 # show the plot
 plt.show()
-
-#%% import libraries
-from sklearn.cluster import AgglomerativeClustering
-import numpy as np
 
 #%% execute agglomerative clusering with 3 clusters
 agg = AgglomerativeClustering(n_clusters=3)

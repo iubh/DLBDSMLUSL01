@@ -10,8 +10,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #%% generate sample data
-X1 = 4+np.random.rand(50,2)
-X2 = 5+ np.random.rand(50,2)
+X1 = 4 + np.random.rand(50,2)
+X2 = 5 + np.random.rand(50,2)
 X3 = 6 + np.random.rand(50,2)
 Z = np.concatenate((X1,X2,X3))
 
@@ -22,8 +22,7 @@ plt.ylabel("Feature 2")
 plt.show()
 
 #%% specify Gaussian Mixture Model
-gmm = mixture.GaussianMixture(n_components=3, 
-                              covariance_type='full')
+gmm = mixture.GaussianMixture(n_components=3)
 
 #%% fit the model
 gmm.fit(Z)
@@ -53,3 +52,5 @@ print(probs)
 #%% show results visually
 plt.scatter(x=Z[:,0], y=Z[:,1], c=labels, cmap='viridis')
 plt.show()
+
+# %%

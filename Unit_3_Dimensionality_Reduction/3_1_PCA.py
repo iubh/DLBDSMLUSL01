@@ -113,3 +113,7 @@ eig_vecs = pca.components_
 # use PCA to project the data to a two-dimensional
 # feature space
 Y = PCA(n_components=2).fit(X_std).transform(X_std)
+
+#%% plot the projected data
+plt.scatter(x=Y[:,0], y=Y[:,1])
+plt.show()
