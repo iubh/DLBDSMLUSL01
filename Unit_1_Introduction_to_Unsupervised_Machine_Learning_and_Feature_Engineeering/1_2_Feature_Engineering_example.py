@@ -14,7 +14,7 @@ from datetime import date
 import seaborn as sns
 
 #%% load the data
-dat = pd.read_csv('./data/data_visitors.csv', delimiter=' ')
+dat = pd.read_csv('./data_visitors.csv', delimiter=' ')
 
 #%% glimpse at the data
 dat

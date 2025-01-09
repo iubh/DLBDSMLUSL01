@@ -15,23 +15,18 @@ from sklearn.feature_selection import f_classif
 
 #%% load sample data
 iris = load_iris()
-feature_names = load_iris().feature_names
 X = pd.DataFrame(iris.data, columns=iris.feature_names)
 y = iris.target
 
-#%%
-# create feature selector which uses F-values
-# in an ANOVA-test between test samples and labels
-# to select 2 features
+#%% run ANOVA to select 2 features
 selector = SelectKBest(score_func=f_classif, k=2)
-
-#%% fit the selector
 X_new = selector.fit_transform(X, y)
 
 #%% print F- and p-values per feature
-pd.DataFrame({'features': feature_names, \
-    'Scores': selector.scores_, \
-    'p-values': selector.pvalues_})
+res = pd.DataFrame({'features': iris.feature_names,
+                    'Scores': selector.scores_,
+                    'p-values': selector.pvalues_})
+print(res)
 
 # console output:
 # 	features	        Scores	    p-values
@@ -40,6 +35,4 @@ pd.DataFrame({'features': feature_names, \
 # 2	petal length (cm)	1180.161182	2.856777e-91
 # 3	petal width (cm)	960.007147	4.169446e-85
 
-
-
-
+# %%

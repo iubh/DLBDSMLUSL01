@@ -31,3 +31,5 @@ labs = newdata[1]
 #%% plot the generated samples 
 plt.scatter(x=vals[:,0], y=vals[:,1], c=labs)
 plt.show()
+
+# %%

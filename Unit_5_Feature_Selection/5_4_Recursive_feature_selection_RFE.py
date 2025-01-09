@@ -3,65 +3,56 @@
 # Course Code: DLBDSMLUSL01
 
 # Recursive feature selection
-# Sequential Forward Feature Selection (SFS)
+# Recursive Feature Elimination
 
 #%% import libraries
 import pandas as pd
-import numpy as np
 from sklearn.datasets import load_iris
-from mlxtend.feature_selection \
-    import SequentialFeatureSelector as SFS
+from sklearn.feature_selection import RFE
 from sklearn.linear_model import LogisticRegression
-import matplotlib.pyplot as plt
+from sklearn.feature_selection import RFECV
 
 #%% load sample data
 iris = load_iris()
-x = pd.DataFrame(iris.data, \
-    columns=iris.feature_names)
+x = pd.DataFrame(iris.data, columns=iris.feature_names)
 
 #%% create a logistic regression object
 lr = LogisticRegression()
 
-#%% create an SFS object
-sfs = SFS(estimator=lr,
-          k_features=(1, 3),  
-          forward=True,       
-          scoring='accuracy', 
-          cv=5)      
+#%% create and fit logistic regressor with RFE
+rfe = RFE(estimator=lr, n_features_to_select=3)
+rfe = rfe.fit(x, iris.target)
 
+#%% show which feature were selected
+rfe_res = pd.DataFrame({'features': iris.feature_names,
+                        'Selected features': rfe.support_,
+                        'Feature ranks': rfe.ranking_})
+print(rfe_res)
 
-#%% fit the model
-sfs = sfs.fit(x, iris.target)
-
-#%% show the selected features
-sfs.k_feature_names_
 # console output:
-# ('sepal length (cm)', 'petal length (cm)', 
-# 'petal width (cm)')
+# 	features	        Selected features	Feature ranks
+# 0	sepal length (cm)	False	            2
+# 1	sepal width (cm)	True	            1
+# 2	petal length (cm)	True	            1
+# 3	petal width (cm)	True	            1
 
-#%% show a full report on the feature selection
-sfs_results = pd.DataFrame(sfs.get_metric_dict()).\
-    T. \
-    sort_values(by='avg_score', ascending=False)
+#%% REF with cross-validation
+rfecv = RFECV(estimator=lr, step=1, cv=5,
+              scoring='accuracy', min_features_to_select= 3)
+rfecv = rfecv.fit(x, iris.target)
 
-#%% show feature importance visually
-# create figure and axes
-fig, ax = plt.subplots()
 
-# plot bars
-y_pos = np.arange(len(sfs_results))
-ax.barh(y_pos, sfs_results['avg_score'], \
-    xerr=sfs_results['std_err'])
+#%% show the CV results
+print(rfecv.cv_results_)
 
-# set axis ticks and labels
-ax.set_yticks(y_pos)
-ax.set_yticklabels(sfs_results['feature_names'])
-ax.set_xlabel('Accuracy')
-
-# limit range to overimpose differences
-plt.xlim([0.95, 0.98])
-
-# show the plot
-plt.show()
+# console output:
+# {'mean_test_score': array([0.96666667, 0.97333333]),
+# 'std_test_score': array([0.02108185, 0.02494438]),
+# 'split0_test_score': array([0.96666667, 0.96666667]),
+# 'split1_test_score': array([0.96666667, 1.        ]),
+# 'split2_test_score': array([0.93333333, 0.93333333]),
+# 'split3_test_score': array([0.96666667, 0.96666667]),
+# 'split4_test_score': array([1., 1.]),
+# 'n_features': array([3, 4])}
 
 # %%

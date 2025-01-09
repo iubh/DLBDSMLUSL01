@@ -13,22 +13,21 @@ from sklearn.datasets import load_iris
 
 #%% load sample data
 iris = load_iris()
-feature_names = load_iris().feature_names
 X = pd.DataFrame(iris.data, columns=iris.feature_names)
 y = iris.target
 
-##%% create and fit feature selector
-selector = SelectKBest(score_func=mutual_info_classif, \
-    k=2)
+#%% create and fit feature selector
+selector = SelectKBest(score_func=mutual_info_classif, k=2)
 X_new = selector.fit_transform(X, y)
 
 #%% print mutual information per feature
-pd.DataFrame({'features': X.columns.values, \
-    'Scores': selector.scores_})
+res = pd.DataFrame({'features': X.columns.values,
+                    'Scores': selector.scores_})
+print(res)
 
 # console output:
-#   features	        Scores
-# 0	sepal length (cm)	0.508725
-# 1	sepal width (cm)	0.302152
-# 2	petal length (cm)	0.982984
-# 3	petal width (cm)	0.994338
+#             features    Scores
+# 0  sepal length (cm)  0.504630
+# 1   sepal width (cm)  0.213946
+# 2  petal length (cm)  0.995217
+# 3   petal width (cm)  0.968754

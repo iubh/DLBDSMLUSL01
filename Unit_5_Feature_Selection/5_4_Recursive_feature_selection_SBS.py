@@ -3,46 +3,62 @@
 # Course Code: DLBDSMLUSL01
 
 # Recursive feature selection
-# Recursive Feature Elimination
+# Sequential Backward Feature Selection (SBS)
 
 #%% import libraries
 import pandas as pd
 import numpy as np
 from sklearn.datasets import load_iris
-from sklearn.feature_selection import RFE
+from mlxtend.feature_selection import SequentialFeatureSelector as SBS
 from sklearn.linear_model import LogisticRegression
-from sklearn.feature_selection import RFECV
+import matplotlib.pyplot as plt
 
 #%% load sample data
 iris = load_iris()
-x = pd.DataFrame(iris.data, \
-    columns=iris.feature_names)
+x = pd.DataFrame(iris.data, columns=iris.feature_names)
 
 #%% create a logistic regression object
 lr = LogisticRegression()
 
-#%% create and fit logistic regressor with RFE
-rfe = RFE(lr, 3).fit(x, iris.target)
+#%% create an SBS object
+sbs = SBS(estimator=lr,
+          k_features=(1, 3),  
+          forward=False,       
+          scoring='accuracy', 
+          cv=5)      
+      
+#%% fit the model
+sbs = sbs.fit(x, iris.target)
 
-#%% show which feature were selected
-pd.DataFrame({'features': iris.feature_names, \
-    'Selected features': rfe.support_, \
-    'Feature ranks': rfe.ranking_})
+#%% show the selected features
+print(sbs.k_feature_names_)
 
 # console output:
-# 	features	        Selected features	Feature ranks
-# 0	sepal length (cm)	False	            2
-# 1	sepal width (cm)	True	            1
-# 2	petal length (cm)	True	            1
-# 3	petal width (cm)	True	            1
+# ('sepal length (cm)', 'petal length (cm)', 'petal width (cm)')
 
-#%% REF with cross-validation
-rfecv = RFECV(estimator=lr, step=1, cv=5, \
-    scoring='accuracy', \
-    min_features_to_select= 3).\
-        fit(x, iris.target)
+#%% show a full report on the feature selection
+sbs_results = pd.DataFrame(sbs.get_metric_dict()).\
+    T.sort_values(by='avg_score', ascending=False)
+print(sbs_results)
 
+#%% show feature importance visually
+# create figure and axes
+fig, ax = plt.subplots()
 
-#%% show grid scores for selected featues
-print(rfecv.grid_scores_)
-# console output: [0.96666667 0.97333333]
+# plot bars
+y_pos = np.arange(len(sbs_results))
+ax.barh(y_pos, sbs_results['avg_score'],
+        xerr=sbs_results['std_err'])
+
+# set axis ticks and labels
+ax.set_yticks(y_pos)
+ax.set_yticklabels(sbs_results['feature_names'])
+ax.set_xlabel('Accuracy')
+
+# limit range to overimpose differences
+plt.xlim([0.95, 0.98])
+
+# show the plot
+plt.show()
+
+# %%

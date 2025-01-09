@@ -49,3 +49,5 @@ labs = agg.fit_predict(Z)
 print(labs)
 # console output: [0 0 0 0 0 2 2 2 2 2 1 1 1 1 1]
 
+
+# %%

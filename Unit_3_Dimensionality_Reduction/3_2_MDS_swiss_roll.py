@@ -19,11 +19,9 @@ ax = plt.axes(projection='3d')
 ax.scatter3D(X[:, 0], X[:, 1], X[:, 2], c=color)
 plt.show()
 
-#%%
-# project the data into a 2-dimensional feature
+#%% # project the data into a 2-dimensional feature
 # space using MDS
-n_components = 2
-mds = MDS(2,random_state=0)
+mds = MDS(n_components=2,random_state=0)
 X_2d = mds.fit_transform(X)
 
 # display the projected data in the 2-dimensional

@@ -12,15 +12,15 @@ from yellowbrick.cluster import SilhouetteVisualizer
 from sklearn.metrics import silhouette_score
 
 #%% generate sample data
-X= np.random.rand(50,2)
-Y= 2 + np.random.rand(50,2)
-Z= np.concatenate((X,Y))
+X = np.random.rand(50,2)
+Y = 2 + np.random.rand(50,2)
+Z = np.concatenate((X,Y))
 
 #%% conduct a k-Means clustering
 model = KMeans(n_clusters=2, random_state=0).fit(Z)
 
 #%% extract labels, i.e. cluster associations
-lab=model.labels_
+lab = model.labels_
 
 #%% calculate the overall Silhouette score
 S = silhouette_score(Z, lab)

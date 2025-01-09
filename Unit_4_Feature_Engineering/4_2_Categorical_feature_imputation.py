@@ -8,13 +8,14 @@
 import pandas as pd
 
 #%% generate sample data
-Table = { \
-    'Customer-ID': [1, 2, 3, 4, 5], \
-    'Gender':['M', pd.NA, 'M', 'F', 'F'], \
-    'Work-type': [1, 2, 2, 3, 3], \
-    'Client-satisfaction':[3, 0, 4, 3, 5], \
-    'Number-occupants': [2, 4, 2, 1, 2], \
-    'Consumption': [70, 140, 65, 40, 65]}
+Table = {
+    'Customer-ID': [1, 2, 3, 4, 5],
+    'Gender':['M', pd.NA, 'M', 'F', 'F'],
+    'Work-type': [1, 2, 2, 3, 3],
+    'Client-satisfaction':[3, 0, 4, 3, 5],
+    'Number-occupants': [2, 4, 2, 1, 2],
+    'Consumption': [70, 140, 65, 40, 65]
+    }
 TDF = pd.DataFrame(data=Table)
 
 #%% print the number of missing values per column
@@ -37,3 +38,5 @@ print(TDF.isnull().sum())
 # Client-satisfaction    0
 # Number-occupants       0
 # Consumption            0
+
+# %%

@@ -16,11 +16,11 @@ from sklearn.cluster import KMeans
 from scipy.spatial.distance import cdist
 
 #%% generate random variables
-X= np.random.rand(50,2)
-Y= 2 + np.random.rand(50,2)
+X = np.random.rand(50,2)
+Y = 2 + np.random.rand(50,2)
 
-#%% gather random variable in a dataframe
-Z= np.concatenate((X,Y))
+#%% gather random variables in a dataframe
+Z = np.concatenate((X,Y))
 df = pd.DataFrame(Z, columns=['xpt', 'ypt'])
 
 #%% glimpse at the data
@@ -49,7 +49,7 @@ centroids = pd.DataFrame(centers,columns=['xpt','ypt'])
 lab = kmeans.labels_
 
 #%% add cluster information to the dataframe
-df['lab']=lab
+df['lab'] = lab
 
 #%% glimpse at the 'labeled' data
 df.head()
@@ -73,9 +73,8 @@ ax.scatter(centroids['xpt'], centroids['ypt'])
 plt.show()
 
 #%% calculate the maximum radius around earch cluster
-radii = [cdist(df[lab == i].iloc[:,[0,1]], [center]).\
-    max() \
-        for i, center in enumerate(centers)]
+radii = [cdist(df[lab == i].iloc[:,[0,1]], [center]).max()
+         for i, center in enumerate(centers)]
 
 #%% glimpse at the found radii
 radii
@@ -97,8 +96,9 @@ ax.axis('equal')
 
 # draw a circle around each cluster centroid
 for c, r in zip(centers, radii):
-    ax.add_patch(plt.Circle(c, r, fc='#CCCCCC', \
-                        lw=3, alpha=0.5))
+    ax.add_patch(plt.Circle(c, r, fc='#CCCCCC', lw=3, alpha=0.5))
 
 # show the plot                        
 plt.show()
+
+# %%

@@ -25,7 +25,7 @@ dat_skew = dat_skew.reshape((len(dat), 1))
 dat_skew = pd.DataFrame(dat_skew, columns = ['Value'])
 
 #%% generate and fit log transformer
-lgt = vt.LogTransformer(variables= ['Value'])
+lgt = vt.LogTransformer(variables = ['Value'])
 lgt.fit(dat_skew)
 
 #%% apply log transformation 

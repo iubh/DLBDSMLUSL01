@@ -11,13 +11,14 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import RobustScaler
 
 #%% generate sample data
-Table = {\
-    'Customer-ID': [1, 2, 3, 4, 5], \
-    'Gender': ['M', 'F', 'M',' F', 'F'], \
-    'Work-type': [1, 2, 2, 3, 3], \
-    'Client-satisfaction': [3, 0, 4, 3, 5], \
-    'Number-occupants': [2, 4, 2, 1, 2], \
-    'Consumption': [70, 140, 65, 40, 65]}
+Table = {
+    'Customer-ID': [1, 2, 3, 4, 5],
+    'Gender': ['M', 'F', 'M',' F', 'F'],
+    'Work-type': [1, 2, 2, 3, 3],
+    'Client-satisfaction': [3, 0, 4, 3, 5],
+    'Number-occupants': [2, 4, 2, 1, 2],
+    'Consumption': [70, 140, 65, 40, 65]
+    }
 TDF = pd.DataFrame(data=Table)
 
 #%% apply Min-Max Scaling on the feature 'Consumption'
@@ -32,6 +33,7 @@ print(TDF['Consumption'])
 # 3    0.00
 # 4    0.25
 
+#%% show descriptive statistics
 print(TDF['Consumption'].describe())
 # console output:
 # count    5.000000
@@ -56,6 +58,7 @@ print(TDF['Consumption'])
 # 3   -1.069045
 # 4   -0.326653
 
+#%% show descriptive statistics
 print(TDF['Consumption'].describe())
 # console output:
 # Name: Consumption, dtype: float64
@@ -68,7 +71,7 @@ print(TDF['Consumption'].describe())
 # 75%     -1.781742e-01
 # max      1.900524e+00
 
-#%% apply Robust Scaling to the column 'Consumption'
+#%% apply robust scaling to the column 'Consumption'
 RS = RobustScaler().fit_transform(TDF[['Consumption']])
 TDF['Consumption'] = RS
 
@@ -80,6 +83,7 @@ print(TDF['Consumption'])
 # 3    -5.0
 # 4     0.0
 
+#%% show descriptive statistics
 print(TDF['Consumption'].describe())
 # console output:
 # Name: Consumption, dtype: float64
@@ -91,3 +95,4 @@ print(TDF['Consumption'].describe())
 # 50%       0.00000
 # 75%       1.00000
 # max      15.00000
+# %%

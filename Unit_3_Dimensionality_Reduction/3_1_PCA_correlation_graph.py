@@ -20,15 +20,12 @@ X_std = StandardScaler().fit_transform(X)
 feature_names = ['sepal length','sepal width',  
                  'petal length','petal width']
 
-#%%
-# calculate the correlation matrix and
+#%% calculate the loadings matrix and
 # create a correlation graph
-fig, cor_mat = plot_pca_correlation_graph(X_std, \
-    feature_names, dimensions=(1, 2), \
-    figure_axis_size=10)
+fig, cor_mat = plot_pca_correlation_graph(X_std, feature_names,
+                        dimensions=(1, 2), figure_axis_size=10)
 
-#%%
-# show the numbers of the correlation
+#%% show the loadings matrix
 # matrix for the 4 features 
 print(cor_mat)
 # console output:

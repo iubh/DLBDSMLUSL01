@@ -47,3 +47,5 @@ ax2.set(xlabel='Number of clusters', \
     ylabel='BIC')
 
 plt.show()
+
+# %%
